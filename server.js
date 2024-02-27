@@ -1,13 +1,25 @@
 const http = require('http')
 const header = require('./header')
 
-const server = http.createServer((req, res) => {
-    console.log('url',req.url)
-    console.log('method',req.method)    
+const database = []
 
-    if(req.url === '/') {
-        console.log('/')
-    } else if(req.url.includes('/todo')) {
+const server = http.createServer((req, res) => {
+    const {url, method} = req
+
+    if(url === '/') {
+        switch(method) {
+            case 'GET': {
+                res.writeHeader(200, header)
+                res.write(JSON.stringify({
+                    url,
+                    method,
+                    database
+                }))
+                res.end()
+                break
+            }
+        }
+    } else if(url.includes('/todo')) {
         console.log('/todo')
     } else {
         console.log('路由錯誤')
