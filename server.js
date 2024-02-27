@@ -1,10 +1,13 @@
 const http = require('http')
 const header = require('./header')
+const {v4: uuidv4} = require('uuid')
 
 const database = []
 
 const server = http.createServer((req, res) => {
     const {url, method} = req
+    let body = ''
+    req.on('data', chunk => body += chunk )
 
     if(url === '/') {
         switch(method) {
@@ -16,6 +19,30 @@ const server = http.createServer((req, res) => {
                     data: database
                 }))
                 res.end()
+                break
+            }
+
+            case 'POST': {
+                req.on('end', () => {
+                    try {  
+                        const title = JSON.parse(body).title
+                        if(title === undefined) throw '找不到title'
+                        const todo = {
+                            title,
+                            id: uuidv4()
+                        }
+                        database.push(todo)
+                        res.writeHeader(200, header)
+                        res.write(JSON.stringify({
+                            url,
+                            method,
+                            data: database
+                        }))
+                        res.end()
+                    } catch (error) {
+                        console.log('錯誤', error)
+                    }
+                })
                 break
             }
         }
