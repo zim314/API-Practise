@@ -51,24 +51,40 @@ const server = http.createServer((req, res) => {
             }
         }
     } else if(url.includes('/todo')) {
-        switch(method) {
-            case 'DELETE': {
-                if(url === '/todo') {
-                    database.length = 0
-                    res.writeHeader(200, header)
-                    res.write(JSON.stringify({
-                        url,
-                        method,
-                        data: database
-                    }))
-                    res.end()
+        try {
+            switch(method) {
+                case 'DELETE': {
+                    if(url === '/todo') {
+                        database.length = 0
+                        res.writeHeader(200, header)
+                        res.write(JSON.stringify({
+                            url,
+                            method,
+                            data: database
+                        }))
+                        res.end()
+                    }else {
+                        const id = url.split('/').pop()
+                        const index = database.findIndex(element => (element.id === id))
+                        if(index === -1) throw '找不到此ID'
+                        database.splice(index, 1)
+                        res.writeHeader(200, header)
+                        res.write(JSON.stringify({
+                            url,
+                            method,
+                            data: database
+                        }))
+                        res.end()
+                    }
+                    break
                 }
-                break
+                default: {
+                    handleError(res, '無此 method')
+                    break
+                }
             }
-            default: {
-                handleError(res, '無此 method')
-                break
-            }
+        } catch (error) {
+            handleError(res, error)
         }
     } else {
         res.writeHeader(400, header)
