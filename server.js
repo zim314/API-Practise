@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
                 req.on('end', () => {
                     try {  
                         const title = JSON.parse(body).title
-                        if(title === undefined) throw '找不到title'
+                        if(title === undefined) throw '找不到 title'
                         const todo = {
                             title,
                             id: uuidv4()
@@ -51,22 +51,22 @@ const server = http.createServer((req, res) => {
             }
         }
     } else if(url.includes('/todo')) {
-        try {
-            switch(method) {
-                case 'DELETE': {
-                    if(url === '/todo') {
-                        database.length = 0
-                        res.writeHeader(200, header)
-                        res.write(JSON.stringify({
-                            url,
-                            method,
-                            data: database
-                        }))
-                        res.end()
-                    }else {
+        switch(method) {
+            case 'DELETE': {
+                if(url === '/todo') {
+                    database.length = 0
+                    res.writeHeader(200, header)
+                    res.write(JSON.stringify({
+                        url,
+                        method,
+                        data: database
+                    }))
+                    res.end()
+                }else {
+                    try {
                         const id = url.split('/').pop()
                         const index = database.findIndex(element => (element.id === id))
-                        if(index === -1) throw '找不到此ID'
+                        if(index === -1) throw '找不到此 ID'
                         database.splice(index, 1)
                         res.writeHeader(200, header)
                         res.write(JSON.stringify({
@@ -75,16 +75,38 @@ const server = http.createServer((req, res) => {
                             data: database
                         }))
                         res.end()
+                    } catch (error) {
+                        handleError(res, error)
                     }
-                    break
                 }
-                default: {
-                    handleError(res, '無此 method')
-                    break
-                }
+                break
             }
-        } catch (error) {
-            handleError(res, error)
+            case 'PATCH': {
+                req.on('end', () => {
+                    try{
+                        const title = JSON.parse(body).title
+                        if(title === undefined) throw '找不到 title'
+                        const id = url.split('/').pop()
+                        const index = database.findIndex(element => (element.id === id))
+                        if(index === -1) throw '找不到此 ID'
+                        database[index].title = title
+                        res.writeHeader(200, header)
+                        res.write(JSON.stringify({
+                            url,
+                            method,
+                            data: database
+                        }))
+                        res.end()
+                    }catch (error) {
+                        handleError(res, error)
+                    }
+                })
+                break
+            }
+            default: {
+                handleError(res, '無此 method')
+                break
+            }
         }
     } else {
         res.writeHeader(400, header)
