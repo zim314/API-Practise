@@ -1,6 +1,7 @@
 const http = require('http')
-const header = require('./header')
 const {v4: uuidv4} = require('uuid')
+const header = require('./header')
+const handleError = require('./handleError')
 
 const database = []
 
@@ -21,7 +22,6 @@ const server = http.createServer((req, res) => {
                 res.end()
                 break
             }
-
             case 'POST': {
                 req.on('end', () => {
                     try {  
@@ -40,7 +40,7 @@ const server = http.createServer((req, res) => {
                         }))
                         res.end()
                     } catch (error) {
-                        console.log('錯誤', error)
+                        handleError(res, error)
                     }
                 })
                 break
