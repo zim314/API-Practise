@@ -4,3 +4,5 @@ const header = {
     'Access-Control-Allow-Method': 'GET, POST, PATCH, PUT, DELETE, OPTION',
     'Content-Type': 'application/json'
 }
+
+module.exports = header
