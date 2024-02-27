@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "14efdf73-d011-4f47-86d5-772b280bfc93",
+		"name": "todolist API 實作",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18271851",
+		"_collection_link": "https://interstellar-sunset-922103.postman.co/workspace/Team-Workspace~10fe9024-b7f5-4319-8fbf-dc7412108dbb/collection/18271851-14efdf73-d011-4f47-86d5-772b280bfc93?action=share&source=collection_link&creator=18271851"
+	},
+	"item": [
+		{
+			"name": "查詢所有代辦事項",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-practise.onrender.com",
+					"protocol": "https",
+					"host": [
+						"api-practise",
+						"onrender",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增一個代辦事項",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"今天要上課\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-practise.onrender.com",
+					"protocol": "https",
+					"host": [
+						"api-practise",
+						"onrender",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有代辦事項",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api-practise.onrender.com/todo",
+					"protocol": "https",
+					"host": [
+						"api-practise",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除指定代辦事項",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api-practise.onrender.com/todo/請貼上ID",
+					"protocol": "https",
+					"host": [
+						"api-practise",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"todo",
+						"請貼上ID"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改指定代辦事項",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"修改內容\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-practise.onrender.com/todo/請貼上ID",
+					"protocol": "https",
+					"host": [
+						"api-practise",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"todo",
+						"請貼上ID"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
