@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
                 req.on('end', () => {
                     try {  
                         const title = JSON.parse(body).title
-                        if(title === undefined) throw '找不到 title'
+                        if(title === undefined || title === '') throw '找不到 title'
                         const todo = {
                             title,
                             id: uuidv4()
@@ -85,7 +85,7 @@ const server = http.createServer((req, res) => {
                 req.on('end', () => {
                     try{
                         const title = JSON.parse(body).title
-                        if(title === undefined) throw '找不到 title'
+                        if(title === undefined || title === '') throw '找不到 title'
                         const id = url.split('/').pop()
                         const index = database.findIndex(element => (element.id === id))
                         if(index === -1) throw '找不到此 ID'
