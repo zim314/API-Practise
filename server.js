@@ -45,9 +45,31 @@ const server = http.createServer((req, res) => {
                 })
                 break
             }
+            default: {
+                handleError(res, '無此 method')
+                break
+            }
         }
     } else if(url.includes('/todo')) {
-        console.log('/todo')
+        switch(method) {
+            case 'DELETE': {
+                if(url === '/todo') {
+                    database.length = 0
+                    res.writeHeader(200, header)
+                    res.write(JSON.stringify({
+                        url,
+                        method,
+                        data: database
+                    }))
+                    res.end()
+                }
+                break
+            }
+            default: {
+                handleError(res, '無此 method')
+                break
+            }
+        }
     } else {
         res.writeHeader(400, header)
         res.write(JSON.stringify({
