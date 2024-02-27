@@ -13,7 +13,7 @@ const server = http.createServer((req, res) => {
                 res.write(JSON.stringify({
                     url,
                     method,
-                    database
+                    data: database
                 }))
                 res.end()
                 break
@@ -22,7 +22,12 @@ const server = http.createServer((req, res) => {
     } else if(url.includes('/todo')) {
         console.log('/todo')
     } else {
-        console.log('路由錯誤')
+        res.writeHeader(400, header)
+        res.write(JSON.stringify({
+            status: false,
+            data: []
+        }))
+        res.end()
     }
 })
 
